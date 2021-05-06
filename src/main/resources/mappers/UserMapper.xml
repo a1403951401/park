@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.park.repository.mysql.dao.UserMapper">
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.example.park.repository.mysql.entity.UserDo">
+        <id column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="display_name" property="display_name"/>
+        <result column="telephone" property="telephone"/>
+        <result column="enabled" property="enabled"/>
+        <result column="created" property="created"/>
+        <result column="last_modified" property="lastModified"/>
+    </resultMap>
+
+    <sql id="BaseColumnList">
+        id,username,password,display_name,telephone,enabled,created,last_modified
+    </sql>
+
+    <select id="selectAllByUsernameAndPassword" resultType="com.example.park.repository.mysql.entity.UserDo">
+        select
+        <include refid="BaseColumnList"/>
+        from user
+        where
+        username = #{username,jdbcType=VARCHAR}
+        AND password = #{password,jdbcType=VARCHAR}
+    </select>
+</mapper>
