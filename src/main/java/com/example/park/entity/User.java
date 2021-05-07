@@ -13,6 +13,4 @@ public class User {
     private Boolean enabled;
     private Double created;
     private Double lastModified;
-
-
 }
