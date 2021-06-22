@@ -1,28 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.park.repository.mysql.dao.UserMapper">
+
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.example.park.repository.mysql.entity.UserDo">
+    <resultMap id="BaseResultMap" type="com.example.park.repository.mysql.entity.UserDO">
         <id column="id" property="id"/>
         <result column="username" property="username"/>
         <result column="password" property="password"/>
-        <result column="display_name" property="display_name"/>
-        <result column="telephone" property="telephone"/>
-        <result column="enabled" property="enabled"/>
-        <result column="created" property="created"/>
-        <result column="last_modified" property="lastModified"/>
+        <result column="name" property="name"/>
+        <result column="license_id" property="licenseId"/>
+        <result column="is_admin" property="isAdmin"/>
+        <result column="phone" property="phone"/>
     </resultMap>
 
-    <sql id="BaseColumnList">
-        id,username,password,display_name,telephone,enabled,created,last_modified
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id
+        , username, password, name, license_id, is_admin, phone
     </sql>
-
-    <select id="selectAllByUsernameAndPassword" resultType="com.example.park.repository.mysql.entity.UserDo">
+    <select id="selectOneByUsernameAndPassword" resultMap="BaseResultMap">
         select
-        <include refid="BaseColumnList"/>
+        <include refid="Base_Column_List"/>
         from user
         where
         username = #{username,jdbcType=VARCHAR}
         AND password = #{password,jdbcType=VARCHAR}
     </select>
+    <select id="selectOneByUsername" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        where
+        username = #{username,jdbcType=VARCHAR}
+    </select>
+    <insert id="insertAll">
+        insert into user
+        (id, username, password,
+         name, license_id, is_admin,
+         phone)
+        values (#{id,jdbcType=NUMERIC}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+                #{name,jdbcType=VARCHAR}, #{licenseId,jdbcType=VARCHAR}, #{isAdmin,jdbcType=NUMERIC},
+                #{phone,jdbcType=VARCHAR})
+
+    </insert>
+
 </mapper>

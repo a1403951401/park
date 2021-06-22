@@ -1,38 +1,118 @@
 package com.example.park.repository.mysql.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 
-@Data
+/**
+ * <p>
+ *
+ * </p>
+ *
+ * @author N.E
+ * @since 2021-06-19
+ */
 @TableName("user")
-public class UserDo implements Serializable {
+public class UserDO implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    @TableField("username")
     private String username;
 
-    @TableField("password")
     private String password;
 
-    @TableField("display_name")
-    private String display_name;
+    private String name;
 
-    @TableField(value = "telephone")
-    private String telephone;
+    @JsonProperty("license_id")
+    private String licenseId;
 
-    @TableField(value = "enabled")
-    private Boolean enabled;
+    private Integer isAdmin;
 
-    @TableField("created")
-    private Double created;
+    private String phone;
 
-    @TableField("last_modified")
-    private Double lastModified;
+    public UserDO(String username, String password, String name, String licenseId, String phone) {
+        this.username = username;
+        this.password = password;
+        this.name = name;
+        this.licenseId = licenseId;
+        this.phone = phone;
+        this.isAdmin = 0;
+    }
+
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getLicenseId() {
+        return licenseId;
+    }
+
+    public void setLicenseId(String licenseId) {
+        this.licenseId = licenseId;
+    }
+
+    public Integer getIsAdmin() {
+        return isAdmin;
+    }
+
+    public void setIsAdmin(Integer isAdmin) {
+        this.isAdmin = isAdmin;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+
+    @Override
+    public String toString() {
+        return "UserDO{" +
+                "id=" + id +
+                ", username=" + username +
+                ", password=" + password +
+                ", name=" + name +
+                ", licenseId=" + licenseId +
+                ", isAdmin=" + isAdmin +
+                ", phone=" + phone +
+                "}";
+    }
 }

@@ -14,6 +14,8 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         // kisso 拦截器配置
-        registry.addInterceptor(new SSOSpringInterceptor()).addPathPatterns("/**").excludePathPatterns("/login");
+        registry.addInterceptor(new SSOSpringInterceptor())
+                .addPathPatterns("/api/**")
+                .excludePathPatterns("/api/auth/*");
     }
 }

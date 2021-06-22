@@ -48,8 +48,8 @@ public class MybatisPlusGenerator {
 
         final PackageConfig packageConfig = new PackageConfig();
         packageConfig.setParent("com.example.park");
-        packageConfig.setEntity("repository.entity");
-        packageConfig.setMapper("repository.dao");
+        packageConfig.setEntity("repository.mysql.entity");
+        packageConfig.setMapper("repository.mysql.dao");
         packageConfig.setXml("repository.mappers");
         packageConfig.setService("biz");
         packageConfig.setServiceImpl("biz.impl");

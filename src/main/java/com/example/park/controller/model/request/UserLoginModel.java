@@ -9,4 +9,6 @@ public class UserLoginModel {
 
     private String password;
 
+    private String code;
+
 }
