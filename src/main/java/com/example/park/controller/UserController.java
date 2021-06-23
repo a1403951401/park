@@ -2,14 +2,13 @@ package com.example.park.controller;
 
 
 import com.baomidou.kaptcha.Kaptcha;
-import com.baomidou.kaptcha.exception.KaptchaIncorrectException;
-import com.baomidou.kaptcha.exception.KaptchaNotFoundException;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.park.biz.IUserService;
-import com.example.park.controller.model.request.UserUpdateModel;
 import com.example.park.controller.model.response.Response;
+import com.example.park.controller.model.response.UserResponse;
 import com.example.park.repository.mysql.entity.UserDO;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
  * @since 2021-06-19
  */
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/user")
 public class UserController {
 
 
@@ -34,37 +33,50 @@ public class UserController {
     private Kaptcha kaptcha;
 
 
-//    @ApiOperation("用户注册")
-//    @ApiImplicitParams({
-//            @ApiImplicitParam(name = "username", value = "用户名", required = true, dataType = "String", paramType = "path"),
-//            @ApiImplicitParam(name = "password", value = "密码", required = true, dataType = "String", paramType = "body"),
-//            @ApiImplicitParam(name = "name", value = "名称", required = true, dataType = "String", paramType = "body"),
-//            @ApiImplicitParam(name = "license_id", value = "驾照号码", required = true, dataType = "String", paramType = "body"),
-//            @ApiImplicitParam(name = "is_admin", value = "是否管理员", required = true, dataType = "Integer", paramType = "body"),
-//            @ApiImplicitParam(name = "phone", value = "手机号", required = true, dataType = "String", paramType = "body"),
-//            @ApiImplicitParam(name = "code", value = "验证码", required = true, dataType = "String", paramType = "body")
-//    })
-//    @PutMapping("/user/{username}")
-//    public Response userUpdate(@PathVariable String username, @RequestBody UserUpdateModel user) {
-//        try {
-//            kaptcha.validate(user.getCode(), 600);
-//        } catch (KaptchaIncorrectException | KaptchaNotFoundException | NullPointerException e) {
-//            return Response.error("验证码有误");
-//        }
-//        UserDO u = userService.selectOneByUsername(username);
-//        if (u == null) {
-//            return Response.error("用户不存在");
-//        }
-//        if (user.getPassword() != null && !user.getPassword().equals("")) {
-//            u.setPassword(user.getPassword());
-//        }
-//
-//        if (userService.updateById(u)) {
-//            return Response.success(u);
-//        }
-//
-//        return Response.error("更新失败");
-//    }
+    @ApiOperation("查询用户")
+    @GetMapping("/")
+    public Response getUser(
+            @RequestParam(name = "username", required = false) String username,
+            @RequestParam(name = "name", required = false) String name,
+            @RequestParam(name = "license_id", required = false) String licenseId,
+            @RequestParam(name = "is_admin", required = false) String isAdmin,
+            @RequestParam(name = "phone", required = false) String phone,
+            @RequestParam(name = "current_page", required = false, defaultValue = "1") Integer current,
+            @RequestParam(name = "page_size", required = false, defaultValue = "10") Integer size
+    ) {
+        // 分页
+        IPage<UserDO> page = userService.page(new Page<>(current, size));
+        // 查询条件
+        LambdaQueryWrapper<UserDO> wrapper = new LambdaQueryWrapper<>();
+        if (username != null && !username.equals("")) {
+            wrapper = wrapper.like(UserDO::getUsername, username);
+        }
+        if (name != null && !name.equals("")) {
+            wrapper = wrapper.like(UserDO::getName, name);
+        }
+        if (licenseId != null && !licenseId.equals("")) {
+            wrapper = wrapper.like(UserDO::getLicenseId, licenseId);
+        }
+        if (phone != null && !phone.equals("")) {
+            wrapper = wrapper.like(UserDO::getPhone, phone);
+        }
+
+        return Response.success(new UserResponse(
+                userService.page(page, wrapper).getRecords(),
+                userService.count(wrapper)
+        ));
+    }
+
+
+    @ApiOperation("删除用户信息")
+    @DeleteMapping("/{id}")
+    public Response deleteUser(@PathVariable Integer id) {
+        if (userService.removeById(id)) {
+            return Response.success("删除成功");
+        }
+        return Response.error("创建失败");
+    }
+
 
 }
 

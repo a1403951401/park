@@ -5,7 +5,7 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: '/',
         name: 'Index',
-        redirect: '/card',
+        // redirect: '/card',
         meta: {
             title: '首页',
         },
@@ -17,6 +17,22 @@ const routes: Array<RouteRecordRaw> = [
                     title: '车辆管理',
                 },
                 component: () => import('@/components/card.vue'),
+            },
+            {
+                path: 'user',
+                name: 'user',
+                meta: {
+                    title: '用户管理',
+                },
+                component: () => import('@/components/user.vue'),
+            },
+            {
+                path: 'rent',
+                name: 'rent',
+                meta: {
+                    title: '租车记录',
+                },
+                component: () => import('@/components/rent.vue'),
             },
         ],
         component: () => import('../views/Index.vue')

@@ -2,6 +2,7 @@ package com.example.park.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.park.biz.ICardService;
@@ -47,7 +48,7 @@ public class CardController {
         // 分页
         IPage<CardDO> page = cardService.page(new Page<>(current, size));
         // 查询条件
-        LambdaQueryWrapper<CardDO> wrapper = new LambdaQueryWrapper<CardDO>();
+        LambdaQueryWrapper<CardDO> wrapper = new LambdaQueryWrapper<>();
         if (name != null && !name.equals("")) {
             wrapper = wrapper.like(CardDO::getName, name);
         }
@@ -57,15 +58,14 @@ public class CardController {
         if (rentableAfter != null && !rentableAfter.equals("")) {
             LocalDate afterDate = LocalDate.parse(rentableAfter, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             wrapper = wrapper.ge(CardDO::getRentableAfter, afterDate)
-                    .or()
                     .ge(CardDO::getRentableBefore, afterDate);
         }
         if (rentableBefore != null && !rentableBefore.equals("")) {
             LocalDate beforeDate = LocalDate.parse(rentableBefore, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             wrapper = wrapper.le(CardDO::getRentableAfter, beforeDate)
-                    .or()
                     .le(CardDO::getRentableBefore, beforeDate);
         }
+
         return Response.success(new CardResponse(
                 cardService.page(page, wrapper).getRecords(),
                 cardService.count(wrapper)
@@ -81,6 +81,37 @@ public class CardController {
             return Response.success(c);
         }
         return Response.error("创建失败");
+    }
+
+
+    @ApiOperation("删除车辆信息")
+    @DeleteMapping("/{id}")
+    public Response deleteCard(@PathVariable Integer id) {
+        if (cardService.removeById(id)) {
+            return Response.success("删除成功");
+        }
+        return Response.error("创建失败");
+    }
+
+
+    @ApiOperation("修改车辆信息")
+    @PutMapping("/{id}")
+    public Response updateCard(@PathVariable Integer id, @RequestBody CardModel card) {
+        CardDO c = cardService.getOne(new LambdaQueryWrapper<CardDO>().eq(CardDO::getId, id));
+        if (c == null) {
+            return Response.error("车辆信息不存在");
+        }
+        if (cardService.update(
+                new LambdaUpdateWrapper<CardDO>()
+                        .eq(CardDO::getId, id)
+                        .set(CardDO::getName, card.getName())
+                        .set(CardDO::getCost, card.getCost())
+                        .set(CardDO::getRentableAfter, card.getRentableAfter())
+                        .set(CardDO::getRentableAfter, card.getRentableAfter())
+        )) {
+            return Response.success("更新成功");
+        }
+        return Response.error("更新失败");
     }
 }
 

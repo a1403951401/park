@@ -44,4 +44,12 @@ public class RentDO implements Serializable {
 
     private BigDecimal cost;
 
+    public RentDO(Integer userId, Integer cardId, BigDecimal cost, LocalDate rentableBefore, LocalDate rentableAfter){
+        this.userId = userId;
+        this.cardId = cardId;
+        this.cost = cost;
+        this.rentableBefore = rentableBefore;
+        this.rentableAfter = rentableAfter;
+    }
+
 }

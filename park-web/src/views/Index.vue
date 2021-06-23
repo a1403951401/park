@@ -90,10 +90,22 @@ export default {
       user: getUser(),
       routers: [
         {
+          class: 'el-icon-s-custom',
+          title: '用户管理',
+          path: '/user',
+          need_admin:true
+        },
+        {
           class: 'el-icon-edit-outline',
           title: '车辆管理',
           path: '/card',
-          need_admin:true
+          need_admin:false
+        },
+        {
+          class: 'el-icon-tickets',
+          title: '租车记录',
+          path: '/rent',
+          need_admin:false
         }
       ],
     });
