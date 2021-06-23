@@ -9,11 +9,12 @@
         <result column="card_id" property="cardId" />
         <result column="rentable_before" property="rentableBefore" />
         <result column="rentable_after" property="rentableAfter" />
+        <result column="cost" property="cost" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        ident, user_id, card_id, rentable_before, rentable_after
+        ident, user_id, card_id, rentable_before, rentable_after, cost
     </sql>
 
 </mapper>

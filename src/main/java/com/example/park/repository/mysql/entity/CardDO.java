@@ -5,6 +5,11 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import java.time.LocalDate;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
 
 /**
@@ -15,6 +20,8 @@ import java.io.Serializable;
  * @author N.E
  * @since 2021-06-19
  */
+@Data
+@AllArgsConstructor
 @TableName("card")
 public class CardDO implements Serializable {
 
@@ -27,59 +34,16 @@ public class CardDO implements Serializable {
 
     private BigDecimal cost;
 
+    @JsonProperty("rentable_before")
     private LocalDate rentableBefore;
 
+    @JsonProperty("rentable_after")
     private LocalDate rentableAfter;
 
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
+    public CardDO(String name, BigDecimal cost, LocalDate rentableBefore, LocalDate rentableAfter) {
         this.name = name;
-    }
-
-    public BigDecimal getCost() {
-        return cost;
-    }
-
-    public void setCost(BigDecimal cost) {
         this.cost = cost;
-    }
-
-    public LocalDate getRentableBefore() {
-        return rentableBefore;
-    }
-
-    public void setRentableBefore(LocalDate rentableBefore) {
         this.rentableBefore = rentableBefore;
-    }
-
-    public LocalDate getRentableAfter() {
-        return rentableAfter;
-    }
-
-    public void setRentableAfter(LocalDate rentableAfter) {
         this.rentableAfter = rentableAfter;
-    }
-
-    @Override
-    public String toString() {
-        return "CardDO{" +
-        "id=" + id +
-        ", name=" + name +
-        ", cost=" + cost +
-        ", rentableBefore=" + rentableBefore +
-        ", rentableAfter=" + rentableAfter +
-        "}";
     }
 }

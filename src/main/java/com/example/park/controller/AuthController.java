@@ -5,6 +5,7 @@ import com.baomidou.kaptcha.exception.KaptchaIncorrectException;
 import com.baomidou.kaptcha.exception.KaptchaNotFoundException;
 import com.baomidou.kisso.SSOHelper;
 import com.baomidou.kisso.security.token.SSOToken;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.example.park.biz.IUserService;
 import com.example.park.controller.model.request.UserLoginModel;
 import com.example.park.controller.model.request.UserRegisterModel;
@@ -50,13 +51,18 @@ public class AuthController {
             @ApiImplicitParam(name = "code", value = "验证码", required = true, dataType = "String", paramType = "body")
     })
     @PostMapping("/login")
-    public Response login(@RequestBody UserLoginModel user) {
+    public Response userLogin(@RequestBody UserLoginModel user) {
         try {
             kaptcha.validate(user.getCode(), 600);
         } catch (KaptchaIncorrectException | KaptchaNotFoundException | NullPointerException e) {
             return Response.error("验证码有误");
         }
-        UserDO u = userService.selectOneByUsernameAndPassword(user.getUsername(), user.getPassword());
+
+        UserDO u = userService.getOne(
+                new LambdaQueryWrapper<UserDO>()
+                        .eq(UserDO::getUsername, user.getUsername())
+                        .eq(UserDO::getPassword, user.getPassword())
+        );
         if (u == null) {
             return Response.error("用户名密码错误");
         }
@@ -85,17 +91,17 @@ public class AuthController {
             @ApiImplicitParam(name = "code", value = "验证码", required = true, dataType = "String", paramType = "body")
     })
     @PostMapping("/register")
-    public Response register(@RequestBody UserRegisterModel user) {
+    public Response userRegister(@RequestBody UserRegisterModel user) {
         try {
             kaptcha.validate(user.getCode(), 600);
         } catch (KaptchaIncorrectException | KaptchaNotFoundException | NullPointerException e) {
             return Response.error("验证码有误");
         }
-        if (userService.selectOneByUsername(user.getUsername()) != null) {
+        if (userService.getOne(new LambdaQueryWrapper<UserDO>().eq(UserDO::getUsername, user.getUsername())) != null) {
             return Response.error("用户已存在");
         }
         UserDO u = new UserDO(user.getUsername(), user.getPassword(), user.getName(), user.getLicenseId(), user.getPhone());
-        if (userService.insertAll(u) == 1) {
+        if (userService.save(u)) {
             SSOToken token = SSOToken.create()
                     .setIp(request)
                     .setId(user.getUsername());
@@ -113,9 +119,10 @@ public class AuthController {
         return Response.error("注册失败");
     }
 
+
     @ApiOperation("查询当前用户信息")
     @GetMapping("/token")
-    public Response token() {
+    public Response userToken() {
         SSOToken token = SSOHelper.getSSOToken(request);
         if (null != token) {
             return Response.success(token.getId());
@@ -125,7 +132,7 @@ public class AuthController {
 
     @ApiOperation("退出登录")
     @GetMapping("/logout")
-    public Response logout() {
+    public Response userLogout() {
         SSOHelper.clearLogin(request, response);
         Cookie userCookie = new Cookie("name", null);
         Cookie adminCookie = new Cookie("is_admin", null);

@@ -1,5 +1,7 @@
 package com.example.park.biz;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.park.repository.mysql.entity.CardDO;
 import org.apache.ibatis.annotations.Param;
@@ -17,5 +19,4 @@ import java.util.List;
  * @since 2021-06-19
  */
 public interface ICardService extends IService<CardDO> {
-    List<CardDO> selectAllByNameAndCostAndRentableAfterAndRentableBefore(@Param("name") String name, @Param("cost") BigDecimal cost, @Param("rentableAfter") LocalDate rentableAfter, @Param("rentableBefore") LocalDate rentableBefore);
 }

@@ -13,7 +13,7 @@ public class Swagger3 {
     public Docket docket() {
         return new Docket(DocumentationType.OAS_30).apiInfo(
                 new ApiInfoBuilder()
-                        .title("Park 停车场")
+                        .title("Park")
                         .build()
         );
     }

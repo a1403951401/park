@@ -2,8 +2,14 @@ package com.example.park.repository.mysql.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
+
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
 
 /**
@@ -14,6 +20,8 @@ import java.io.Serializable;
  * @author N.E
  * @since 2021-06-19
  */
+@Data
+@NoArgsConstructor
 @TableName("rent")
 public class RentDO implements Serializable {
 
@@ -22,63 +30,18 @@ public class RentDO implements Serializable {
       @TableId(value = "ident", type = IdType.AUTO)
     private Integer ident;
 
+    @JsonProperty("user_id")
     private Integer userId;
 
+    @JsonProperty("card_id")
     private Integer cardId;
 
+    @JsonProperty("rentable_before")
     private LocalDate rentableBefore;
 
+    @JsonProperty("rentable_after")
     private LocalDate rentableAfter;
 
+    private BigDecimal cost;
 
-    public Integer getIdent() {
-        return ident;
-    }
-
-    public void setIdent(Integer ident) {
-        this.ident = ident;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    public Integer getCardId() {
-        return cardId;
-    }
-
-    public void setCardId(Integer cardId) {
-        this.cardId = cardId;
-    }
-
-    public LocalDate getRentableBefore() {
-        return rentableBefore;
-    }
-
-    public void setRentableBefore(LocalDate rentableBefore) {
-        this.rentableBefore = rentableBefore;
-    }
-
-    public LocalDate getRentableAfter() {
-        return rentableAfter;
-    }
-
-    public void setRentableAfter(LocalDate rentableAfter) {
-        this.rentableAfter = rentableAfter;
-    }
-
-    @Override
-    public String toString() {
-        return "RentDO{" +
-        "ident=" + ident +
-        ", userId=" + userId +
-        ", cardId=" + cardId +
-        ", rentableBefore=" + rentableBefore +
-        ", rentableAfter=" + rentableAfter +
-        "}";
-    }
 }

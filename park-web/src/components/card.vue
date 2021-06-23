@@ -1,6 +1,28 @@
 <template>
   <el-form inline :label-position="'left'" label-width="80px">
-
+    <el-form-item label="车辆">
+      <el-input v-model="search.name" placeholder="请输入内容"></el-input>
+    </el-form-item>
+    <el-form-item label="日期" label-width="40px">
+      <el-date-picker
+          v-model="search.time"
+          type="daterange"
+          range-separator="至"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+      />
+    </el-form-item>
+    <el-form-item>
+      <el-button type="primary" icon="el-icon-search" @click="queryCard">搜索</el-button>
+      <el-button
+          icon="el-icon-refresh-left"
+          @click="
+          search.name = '';
+          search.time = [];
+        "
+      >重置
+      </el-button>
+    </el-form-item>
   </el-form>
   <!-- 搜索结果 -->
   <el-table :stripe="true" v-loading="search.loading" :data="search.table" style="width: 100%">
@@ -75,11 +97,15 @@
 <script>
 
 import {reactive} from "vue";
+import {getCard} from "@/utils/api/card";
+import {ElMessage} from "element-plus";
 
 export default {
   methods: {},
   setup() {
     const search = reactive({
+      name: "",
+      time: [],
 
       isShow: false,
       show: '',
@@ -90,7 +116,34 @@ export default {
       count: 0,
       loading: false,
     });
-    return {search};
+
+
+    const queryCard = () => {
+      search.loading = true;
+      let t1, t2;
+      if (search.time !== null) {
+        t1 = search.time[0];
+        t2 = search.time[1];
+      }
+      getCard(
+          search.name,
+          t1,
+          t2,
+          search.pageSize,
+          search.page
+      )
+          .then(response => {
+            search.table = response['card'];
+            search.count = response['count'];
+            search.loading = false;
+            ElMessage.success('搜索成功');
+          })
+          .catch(() => {
+            search.loading = false;
+          });
+    };
+    queryCard();
+    return {search, queryCard};
   },
 };
 </script>

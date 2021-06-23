@@ -5,7 +5,7 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: '/',
         name: 'Index',
-        // redirect: '/card',
+        redirect: '/card',
         meta: {
             title: '首页',
         },

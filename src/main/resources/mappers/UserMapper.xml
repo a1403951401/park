@@ -18,30 +18,5 @@
         id
         , username, password, name, license_id, is_admin, phone
     </sql>
-    <select id="selectOneByUsernameAndPassword" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from user
-        where
-        username = #{username,jdbcType=VARCHAR}
-        AND password = #{password,jdbcType=VARCHAR}
-    </select>
-    <select id="selectOneByUsername" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from user
-        where
-        username = #{username,jdbcType=VARCHAR}
-    </select>
-    <insert id="insertAll">
-        insert into user
-        (id, username, password,
-         name, license_id, is_admin,
-         phone)
-        values (#{id,jdbcType=NUMERIC}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
-                #{name,jdbcType=VARCHAR}, #{licenseId,jdbcType=VARCHAR}, #{isAdmin,jdbcType=NUMERIC},
-                #{phone,jdbcType=VARCHAR})
-
-    </insert>
 
 </mapper>

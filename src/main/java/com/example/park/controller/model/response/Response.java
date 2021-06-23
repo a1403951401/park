@@ -1,5 +1,6 @@
 package com.example.park.controller.model.response;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data

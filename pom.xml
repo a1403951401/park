@@ -5,8 +5,8 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.4.5</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <version>2.5.1</version>
+        <relativePath/>
     </parent>
     <groupId>com.example</groupId>
     <artifactId>park</artifactId>
@@ -38,69 +38,75 @@
         </dependency>
 
         <!-- lombok -->
-            <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
-            <dependency>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-                <version>1.18.20</version>
-                <scope>provided</scope>
-            </dependency>
+        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.20</version>
+            <scope>provided</scope>
+        </dependency>
 
         <!-- swagger -->
-            <!-- https://mvnrepository.com/artifact/io.springfox/springfox-boot-starter -->
-            <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-boot-starter</artifactId>
-                <version>3.0.0</version>
-            </dependency>
+        <!-- https://mvnrepository.com/artifact/io.springfox/springfox-boot-starter -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-boot-starter</artifactId>
+            <version>3.0.0</version>
+        </dependency>
 
         <!-- MyBatis-plus -->
-            <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-boot-starter -->
-            <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-boot-starter</artifactId>
-                <version>3.4.2</version>
-            </dependency>
+        <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-boot-starter -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus</artifactId>
+            <version>3.4.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>3.4.3.1</version>
+        </dependency>
+
 
         <!-- MyBatis-plus-generator -->
-            <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-generator -->
-            <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-generator</artifactId>
-                <version>3.4.1</version>
-            </dependency>
+        <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-generator -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-generator</artifactId>
+            <version>3.4.1</version>
+        </dependency>
 
         <!-- MyBatis-plus-generator 模板引擎 -->
-            <!-- https://mvnrepository.com/artifact/org.apache.velocity/velocity-engine-core -->
-            <dependency>
-                <groupId>org.apache.velocity</groupId>
-                <artifactId>velocity-engine-core</artifactId>
-                <version>2.0</version>
-            </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.velocity/velocity-engine-core -->
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity-engine-core</artifactId>
+            <version>2.0</version>
+        </dependency>
 
         <!-- Flyway -->
-            <!-- https://mvnrepository.com/artifact/org.flywaydb/flyway-core -->
-            <dependency>
-                <groupId>org.flywaydb</groupId>
-                <artifactId>flyway-core</artifactId>
-                <version>7.8.2</version>
-            </dependency>
+        <!-- https://mvnrepository.com/artifact/org.flywaydb/flyway-core -->
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>7.8.2</version>
+        </dependency>
 
         <!-- 验证码 -->
-            <!-- https://mvnrepository.com/artifact/com.baomidou/kaptcha-spring-boot-starter -->
-            <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>kaptcha-spring-boot-starter</artifactId>
-                <version>1.1.0</version>
-            </dependency>
+        <!-- https://mvnrepository.com/artifact/com.baomidou/kaptcha-spring-boot-starter -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>kaptcha-spring-boot-starter</artifactId>
+            <version>1.1.0</version>
+        </dependency>
 
         <!-- jwt -->
-            <!-- https://mvnrepository.com/artifact/com.baomidou/kisso -->
-            <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>kisso</artifactId>
-                <version>3.7.6</version>
-            </dependency>
+        <!-- https://mvnrepository.com/artifact/com.baomidou/kisso -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>kisso</artifactId>
+            <version>3.7.6</version>
+        </dependency>
     </dependencies>
 
     <build>
